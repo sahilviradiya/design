@@ -2,10 +2,8 @@ import 'package:design/common_widgets/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../common_widgets/common_text_field.dart';
 import '../../theme/colors.dart';
-import 'reset_password.dart';
 import 'verification_screen.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -17,21 +15,14 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
   String? emailError;
-  String? passwordError;
 
-  bool  isButtonEnabled() {
-    return emailError == null &&
-        passwordError == null &&
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
+  bool isButtonEnabled() {
+    return emailError == null && emailController.text.isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: white,
       body: Stack(
@@ -43,8 +34,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.1,
                 left: MediaQuery.of(context).size.width * 0.05,
-                child: SvgPicture.asset('assets/svg_image/Arrow - Left.svg',width: 34,height: 34,
-                   ),
+                child: SvgPicture.asset(
+                  'assets/svg_image/Arrow - Left.svg',
+                  width: 34,
+                  height: 34,
+                ),
               ),
               Positioned(
                 bottom: 120,
@@ -60,10 +54,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
               ),
               Positioned(
-                bottom: 70,
-                left: 20,
-                child:MyText(text: 'Please enter your email or phone number to \nget reset password.',color: white, maxLines: null,fontSize: 15,)
-              ),
+                  bottom: 70,
+                  left: 20,
+                  child: MyText(
+                    text:
+                    'Please enter your email or phone number to \nget reset password.',
+                    color: white,
+                    maxLines: null,
+                    fontSize: 15,
+                  )),
             ],
           ),
           Container(
@@ -85,9 +84,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     hintText: 'tabish@m2m.com',
                     onChanged: (value) {
                       setState(() {
-                        if (value.isEmpty) {
-                          emailError = 'Please enter your email';
-                        }
+                        emailError = (value.isEmpty)
+                            ? 'Please enter your email'
+                            : (!RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                            .hasMatch(value))
+                            ? 'Enter a valid email'
+                            : null;
                       });
                     },
                   ),
@@ -96,36 +99,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       padding: const EdgeInsets.only(top: 5, left: 5),
                       child: Text(
                         emailError!,
-                        style: TextStyle(color: Colors.red, fontSize: 12),
-                      ),
-                    ),
-                  const SizedBox(height: 12),
-
-                  if (passwordError != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5, left: 5),
-                      child: Text(
-                        passwordError!,
-                        style: TextStyle(color: Colors.red, fontSize: 12),
+                        style: const TextStyle(color: Colors.red, fontSize: 12),
                       ),
                     ),
                   const SizedBox(height: 15),
 
                   ElevatedButton(
-                    onPressed: () {
-                     Get.to(VerificationScreen());
-                    },
+                    onPressed: isButtonEnabled()
+                        ? () {
+                      Get.to(VerificationScreen());
+                    }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: background, // Set your desired background color here
+                      backgroundColor: background, // Enabled color
+                      disabledBackgroundColor: background, // Keeps the same color when disabled
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      minimumSize: Size(double.infinity, 50), // Full width and height
+                      minimumSize: const Size(double.infinity, 50),
                     ),
-                    child: MyText(
+                    child: const MyText(
                       text: "Send reset link",
-                      color: Colors.white, // Text color
-                      fontSize: 14, // Text size
+                      color: Colors.white,
+                      fontSize: 14,
                     ),
                   ),
 

@@ -121,6 +121,26 @@ class _ResetPasswordState extends State<ResetPassword> {
                       ),
                     ),
                   const SizedBox(height: 15),
+                  // ElevatedButton(
+                  //   onPressed: isButtonEnabled()
+                  //       ? () {
+                  //     Get.to(SuccessfullyScreen());
+                  //   }
+                  //       : null,
+                  //   style: ElevatedButton.styleFrom(
+                  //
+                  //     backgroundColor: background,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(8),
+                  //     ),
+                  //     minimumSize: Size(double.infinity, 50),
+                  //   ),
+                  //   child: MyText(
+                  //     text: "Reset Password",
+                  //     color: Colors.white,
+                  //     fontSize: 14,
+                  //   ),
+                  // ),
                   ElevatedButton(
                     onPressed: isButtonEnabled()
                         ? () {
@@ -128,18 +148,20 @@ class _ResetPasswordState extends State<ResetPassword> {
                     }
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: background,
+                      backgroundColor: background, // Enabled color
+                      disabledBackgroundColor: background, // Keeps the same color when disabled
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                     ),
-                    child: MyText(
+                    child: const MyText(
                       text: "Reset Password",
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
+
                 ],
               ),
             ),
